@@ -1,3 +1,11 @@
+# Reason for fork
+Version `2.1.3` of https://github.com/eatsprig/paranoia has a bug such that it
+does not filter out deleted records when checking uniqueness of a new record.
+ This was originally resolved by upgrading to `2.1.5` but there is another bug
+ in this release which does not update a records `updated_at` when it is
+ deleted. In order to satifsy both requirements it was descided to fork the
+ gem, rollback to `2.1.3`, and apply the fix for the first issue manually.
+
 # Paranoia
 
 Paranoia is a re-implementation of [acts\_as\_paranoid](http://github.com/technoweenie/acts_as_paranoid) for Rails 3 and Rails 4, using much, much, much less code.
