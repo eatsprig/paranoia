@@ -29,7 +29,7 @@ def setup!
     'related_models' => 'parent_model_id INTEGER, parent_model_with_counter_cache_column_id INTEGER, deleted_at DATETIME',
     'asplode_models' => 'parent_model_id INTEGER, deleted_at DATETIME',
     'employers' => 'name VARCHAR(32), deleted_at DATETIME',
-    'employees' => 'deleted_at DATETIME',
+    'employees' => 'updated_at DATETIME, deleted_at DATETIME',
     'jobs' => 'employer_id INTEGER NOT NULL, employee_id INTEGER NOT NULL, deleted_at DATETIME',
     'custom_column_models' => 'destroyed_at DATETIME',
     'custom_sentinel_models' => 'deleted_at DATETIME NOT NULL',
@@ -703,6 +703,12 @@ class ParanoiaTest < test_framework
     a = Employer.create!(name: "A")
     b = Employer.new(name: "A")
     refute b.valid?
+  end
+
+  def test_delete_changes_updated_at
+    a = Employee.create!
+    a.destroy!
+    assert_equal a.deleted_at, a.updated_at
   end
 
   def test_i_am_the_destroyer
