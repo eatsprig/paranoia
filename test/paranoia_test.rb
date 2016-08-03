@@ -692,6 +692,13 @@ class ParanoiaTest < test_framework
     assert b.valid?
   end
 
+  def test_validates_uniqueness_only_checks_non_deleted_records_at_save
+    a = Employer.create!(name: "A")
+    b = Employer.new(name: "A")
+    a.destroy
+    assert b.valid?
+  end
+
   def test_i_am_the_destroyer
     expected = %Q{
       Sharon: "There should be a method called I_AM_THE_DESTROYER!"
